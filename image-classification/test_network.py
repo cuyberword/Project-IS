@@ -4,6 +4,7 @@
 # import the necessary packages
 from keras.preprocessing.image import img_to_array
 from keras.models import load_model
+from flask import jsonify
 import keras
 import numpy as np
 import argparse
@@ -11,7 +12,7 @@ import imutils
 import cv2
 import tensorflow as tf
 from flask import session
-
+import numpy as np
 
 def imageClassification(image):
 # construct the argument parse and parse the arguments
@@ -64,7 +65,8 @@ def imageClassification(image):
 	# build the label
 	label = label_switch(max([burger,pizza,sushi,friedchicken,pasta,sate]))
 	proba = max([burger,pizza,sushi,friedchicken,pasta,sate])
-	label = "{}: {:.2f}%".format(label, proba * 100)
+	proba = int(proba*100)
+	# label = "{}: {:.2f}%".format(label, proba * 100)
 
 	# print("burger:",burger)
 	# print("pizza:",pizza)
@@ -86,4 +88,4 @@ def imageClassification(image):
 	# cv2.imshow("Output", output)
 	# cv2.waitKey(0)
 
-	return label
+	return jsonify(status=200, food=label, probability=proba)
