@@ -70,7 +70,7 @@ def imageClassification(image):
 	else:
 		print(image_name)
 		print(label)
-		os.rename(image_name, "images/burger/" + image_name)
+		os.rename(image_name, "images/" + label + "/" + image_name)
 		print("image moved")
 
 	return jsonify(status=200, food=label, probability=proba)
